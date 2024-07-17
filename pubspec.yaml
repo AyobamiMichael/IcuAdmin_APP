@@ -43,6 +43,7 @@ dependencies:
   network_discovery: ^1.0.0
   http: ^1.2.1
   html: ^0.15.4
+  path_provider: ^2.1.3
   
 
 dev_dependencies:

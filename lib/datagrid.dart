@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:icu_admin_app/assignpage.dart';
+import 'package:icu_admin_app/logpage.dart';
 import 'package:intl/intl.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:wifi_scan_windows/available_network.dart';
@@ -87,6 +88,17 @@ class ICUDataGridState extends State<ICUDataGrid> {
     });
   }
 
+  void getICUDeviceSelected() {
+    try {
+      List<Map<String, dynamic>> selectedICUDevices =
+          data.where((item) => item['selected']).toList();
+      print('Selected ICUDevices: $selectedICUDevices');
+      print(selectedICUDevices[0]['name']);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   void _onRowTap(Map<String, dynamic> item) {
     // Handle row tap
     print('Tapped on row: ${item['name']}');
@@ -115,28 +127,33 @@ class ICUDataGridState extends State<ICUDataGrid> {
       ),
       body: Stack(
         children: [
-          if (isAnySelected)
-            Positioned(
-              left: 400.0,
-              top: 40.0,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Handle "Assign" button press
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const AssignPage()),
-                  );
-                },
-                child: const Text('Assign'),
-              ),
+          Positioned(
+            left: 400.0,
+            top: 40.0,
+            child: ElevatedButton(
+              onPressed: () {
+                // Handle "Assign" button press
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AssignPage()),
+                );
+                getICUDeviceSelected();
+              },
+              child: const Text('Assign'),
             ),
+          ),
           Positioned(
             left: 100.0,
             top: 40.0,
             child: Row(
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LogPage()),
+                    );
+                  },
                   child: Text('Log'),
                 ),
                 SizedBox(width: 10.0),
@@ -178,8 +195,8 @@ class ICUDataGridState extends State<ICUDataGrid> {
                     rows: data.map((item) {
                       int index = data.indexOf(item);
                       return DataRow(
-                        color: MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
+                        color: WidgetStateProperty.resolveWith<Color>(
+                            (Set<WidgetState> states) {
                           return _getRowColor(
                               item); // Set the row color based on the conditions
                         }),
@@ -276,15 +293,17 @@ class ICUDataGridState extends State<ICUDataGrid> {
     try {
       final response = await http.get(Uri.parse('http://$wifiGateway'));
       // http.Request;
+      //print(http.Response);
+      print(wifiGateway);
       final responseBody = response.body;
-
+      //print(responseBody);
       // Parse HTML content
       final document = htmlparser.parse(responseBody);
-      // print(document);
+
       // Extract data from HTML
 
       final wirelessSensorValues = document.querySelectorAll('p');
-
+      //print(wirelessSensorValues);
       listOfSensorValues =
           wirelessSensorValues.map((element) => element.text).toList();
       // print(listOfSensorValues);
@@ -307,12 +326,12 @@ class ICUDataGridState extends State<ICUDataGrid> {
     final wifiIP = await info.getWifiIP();
     final wifiGateWay = await info.getWifiGatewayIP();
     print(wifiName);
-    print(wifiBSSID);
-    print(wifiGateWay);
-    print(wifiIP);
-
-    List<AvailableNetwork>? result =
-        await _wifiScanWindowsPlugin.getAvailableNetworks();
-    print(result![0].ssid);
+    // print(wifiBSSID);
+    // print(wifiGateWay);
+    // print(wifiIP);
+    fetchData(wifiGateWay!);
+    // List<AvailableNetwork>? result =
+    //   await _wifiScanWindowsPlugin.getAvailableNetworks();
+    //print(result![0].ssid);
   }
 }
