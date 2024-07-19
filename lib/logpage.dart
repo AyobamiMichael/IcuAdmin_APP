@@ -13,7 +13,8 @@ class LogPage extends StatefulWidget {
 class _LogPageState extends State<LogPage> {
   Future<List<Map<String, dynamic>>> _loadLogFile() async {
     final directory = await getApplicationDocumentsDirectory();
-    final path = '${directory.path}/staff_log.json';
+    final path = '${directory.path}/ICU_Admin_Doc/staff_log.json';
+    //print(path);
     final file = File(path);
     if (await file.exists()) {
       final contents = await file.readAsString();
@@ -58,7 +59,7 @@ class _LogPageState extends State<LogPage> {
                       Text('Name: ${log['name']}'),
                       Text('Phone: ${log['phone']}'),
                       Text('Designation: ${log['designation']}'),
-                      Text('ICU Device: ${log['icuDevice'] ?? 'N/A'}'),
+                      Text('ICU Device: ${log['assignedICUDevices'] ?? 'N/A'}'),
                       Text('Time: ${log['time']}')
                     ],
                   ),
