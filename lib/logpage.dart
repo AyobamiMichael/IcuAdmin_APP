@@ -18,8 +18,10 @@ class _LogPageState extends State<LogPage> {
     final file = File(path);
     if (await file.exists()) {
       final contents = await file.readAsString();
+      // print(contents);
       return List<Map<String, dynamic>>.from(jsonDecode(contents));
     }
+
     return [];
   }
 

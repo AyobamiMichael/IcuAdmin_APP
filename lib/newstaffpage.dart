@@ -20,6 +20,25 @@ class _NewStaffPageState extends State<NewStaffPage> {
 
   List<Map<String, dynamic>> staffList = [];
 
+  @override
+  void initState() {
+    super.initState();
+    _loadStaffData();
+  }
+
+  Future<void> _loadStaffData() async {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/staff_data.json');
+
+    if (await file.exists()) {
+      final contents = await file.readAsString();
+      final List<dynamic> jsonData = jsonDecode(contents);
+      setState(() {
+        staffList = jsonData.cast<Map<String, dynamic>>();
+      });
+    }
+  }
+
   // Function to generate a random alphanumeric string of length `length`
   String generateRandomId({int length = 6}) {
     const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -65,6 +84,7 @@ class _NewStaffPageState extends State<NewStaffPage> {
 
       // Convert list to JSON
       String jsonData = jsonEncode(staffList);
+      // print(jsonData);
 
       // Save JSON data to a file
       final directory = await getApplicationDocumentsDirectory();
