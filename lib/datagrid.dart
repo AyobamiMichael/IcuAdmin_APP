@@ -152,80 +152,155 @@ class ICUDataGridState extends State<ICUDataGrid> {
         children: [
           Positioned(
             left: 400.0,
-            top: 40.0,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AssignPage()),
-                );
-                getICUDeviceSelected();
-              },
-              child: const Text('Assign ICU To Staff'),
+            top: 30.0,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: IconButton(
+                    icon: Icon(Icons.person_add, color: Colors.blue),
+                    iconSize: 30.0, // Set the icon size here
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AssignPage()),
+                      );
+                      getICUDeviceSelected();
+                    },
+                  ),
+                ),
+                Text('Assign')
+              ],
             ),
           ),
           Positioned(
             left: 100.0,
-            top: 40.0,
+            top: 30.0,
             child: Row(
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const LogPage()),
-                    );
-                  },
-                  child: const Text('Log'),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: IconButton(
+                        icon: Icon(Icons.list_alt, color: Colors.green),
+                        iconSize: 30.0, // Set the icon size here
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LogPage()),
+                          );
+                        },
+                      ),
+                    ),
+                    Text('Log')
+                  ],
                 ),
                 const SizedBox(width: 10.0),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Reconnect'),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: IconButton(
+                        icon: Icon(Icons.wifi, color: Colors.orange),
+                        iconSize: 30.0, // Set the icon size here
+                        onPressed: () {},
+                      ),
+                    ),
+                    Text('WiFi')
+                  ],
                 ),
                 const SizedBox(width: 10.0),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Alert'),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: IconButton(
+                        icon: Icon(Icons.notification_important,
+                            color: Colors.red),
+                        iconSize: 30.0, // Set the icon size here
+                        onPressed: () {},
+                      ),
+                    ),
+                    Text('Alert')
+                  ],
                 ),
                 const SizedBox(width: 190.0),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const NewStaffPage(),
-                        ));
-                  },
-                  child: const Text('New Staff'),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: IconButton(
+                        icon:
+                            Icon(Icons.person_add_alt_1, color: Colors.purple),
+                        iconSize: 30.0, // Set the icon size here
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const NewStaffPage()),
+                          );
+                        },
+                      ),
+                    ),
+                    Text('New Staff')
+                  ],
                 ),
                 const SizedBox(width: 20.0),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Newpatientpage(),
-                        ));
-                  },
-                  child: const Text('New Patient'),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: IconButton(
+                        icon: Icon(Icons.person_add_alt, color: Colors.teal),
+                        iconSize: 30.0, // Set the icon size here
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Newpatientpage()),
+                          );
+                        },
+                      ),
+                    ),
+                    Text('New Patient')
+                  ],
                 ),
                 const SizedBox(width: 30.0),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Assignpatienttoicupage(),
-                        ));
-                  },
-                  child: const Text('Assign Patient To ICU'),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: IconButton(
+                        icon: Icon(Icons.assignment_ind, color: Colors.brown),
+                        iconSize: 30.0, // Set the icon size here
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const Assignpatienttoicupage(),
+                              ));
+                        },
+                      ),
+                    ),
+                    Text('Assign ICU')
+                  ],
                 ),
               ],
             ),
           ),
           Positioned(
-            top: 80,
+            top: 100,
             left: 100,
             child: Center(
               child: Container(
@@ -243,21 +318,23 @@ class ICUDataGridState extends State<ICUDataGrid> {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: DataTable(
+                      headingRowColor: WidgetStateColor.resolveWith(
+                          (states) => Colors.black),
                       columns: const [
                         DataColumn(
-                            label: Text('Name',
+                            label: Text('Device Name',
                                 style: TextStyle(color: Colors.white))),
                         DataColumn(
                             label: Text('BP',
                                 style: TextStyle(color: Colors.white))),
                         DataColumn(
-                            label: Text('Temperature (°C)',
+                            label: Text('Temperature',
                                 style: TextStyle(color: Colors.white))),
                         DataColumn(
                             label: Text('Update Time',
                                 style: TextStyle(color: Colors.white))),
                         DataColumn(
-                            label: Text('Status',
+                            label: Text('Alert',
                                 style: TextStyle(color: Colors.white))),
                       ],
                       rows: data.map((item) {
@@ -267,14 +344,14 @@ class ICUDataGridState extends State<ICUDataGrid> {
                             DataCell(
                               GestureDetector(
                                 onTap: () => _onRowTap(item),
-                                child: Text(item['name'] ?? '',
+                                child: Text(item['name'],
                                     style: TextStyle(color: Colors.white)),
                               ),
                             ),
                             DataCell(
                               GestureDetector(
                                 onTap: () => _onRowTap(item),
-                                child: Text(item['bp'] ?? '',
+                                child: Text(item['bp'],
                                     style: TextStyle(color: Colors.white)),
                               ),
                             ),
@@ -282,7 +359,7 @@ class ICUDataGridState extends State<ICUDataGrid> {
                               GestureDetector(
                                 onTap: () => _onRowTap(item),
                                 child: Text(
-                                    item['temperature'].toStringAsFixed(2) ??
+                                    item['temperature']?.toStringAsFixed(2) ??
                                         '',
                                     style: TextStyle(color: Colors.white)),
                               ),
@@ -295,9 +372,16 @@ class ICUDataGridState extends State<ICUDataGrid> {
                               ),
                             ),
                             DataCell(
-                              _buildBlinkingIndicator(item),
+                              GestureDetector(
+                                onTap: () => _onRowTap(item),
+                                child: _buildBlinkingIndicator(item),
+                              ),
                             ),
                           ],
+                          selected: item['selected'] ?? false,
+                          onSelectChanged: (bool? value) {
+                            _onCheckboxChanged(value, index);
+                          },
                         );
                       }).toList(),
                     ),
@@ -433,7 +517,6 @@ class _BlinkingIndicatorState extends State<BlinkingIndicator>
 
 
 
-
 /*import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -488,6 +571,7 @@ class ICUDataGridState extends State<ICUDataGrid> {
   ValueNotifier<bool> showDotsNotifier = ValueNotifier<bool>(true);
   bool isAnySelected = false;
   String icuDeviceName = '';
+
   @override
   void initState() {
     super.initState();
@@ -568,9 +652,13 @@ class ICUDataGridState extends State<ICUDataGrid> {
 
   Widget _buildBlinkingIndicator(Map<String, dynamic> item) {
     Color color = _getIndicatorColor(item);
-    return color == Colors.transparent
-        ? Container()
-        : BlinkingIndicator(color: color);
+    if (color == Colors.red) {
+      return BlinkingIndicator(color: color);
+    } else if (color == Colors.green) {
+      return Icon(Icons.circle, color: color, size: 25);
+    } else {
+      return Container();
+    }
   }
 
   @override
@@ -676,9 +764,6 @@ class ICUDataGridState extends State<ICUDataGrid> {
                     child: DataTable(
                       columns: const [
                         DataColumn(
-                            label: Text('Select',
-                                style: TextStyle(color: Colors.white))),
-                        DataColumn(
                             label: Text('Name',
                                 style: TextStyle(color: Colors.white))),
                         DataColumn(
@@ -698,14 +783,6 @@ class ICUDataGridState extends State<ICUDataGrid> {
                         int index = data.indexOf(item);
                         return DataRow(
                           cells: [
-                            DataCell(
-                              Checkbox(
-                                value: item['selected'],
-                                onChanged: (value) {
-                                  _onCheckboxChanged(value, index);
-                                },
-                              ),
-                            ),
                             DataCell(
                               GestureDetector(
                                 onTap: () => _onRowTap(item),
@@ -862,4 +939,17 @@ class _BlinkingIndicatorState extends State<BlinkingIndicator>
     );
   }
 }
+
+
 */
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:icu_admin_app/heartgraph.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Patientdetailspage extends StatefulWidget {
@@ -39,6 +40,12 @@ class _PatientdetailspageState extends State<Patientdetailspage> {
 
   void _onRowTap(Map<String, dynamic> item) {
     // Handle row tap
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Heartgraph(),
+      ),
+    );
   }
 
   @override
@@ -54,7 +61,7 @@ class _PatientdetailspageState extends State<Patientdetailspage> {
             left: 50,
             child: Center(
               child: Container(
-                width: 450,
+                width: 800,
                 height: 300,
                 margin: const EdgeInsets.all(20.0),
                 padding: const EdgeInsets.all(10.0),
@@ -77,6 +84,18 @@ class _PatientdetailspageState extends State<Patientdetailspage> {
                                 style: TextStyle(color: Colors.white))),
                         DataColumn(
                             label: Text('Gender',
+                                style: TextStyle(color: Colors.white))),
+                        DataColumn(
+                            label: Text('Bp',
+                                style: TextStyle(color: Colors.white))),
+                        DataColumn(
+                            label: Text('Temperature',
+                                style: TextStyle(color: Colors.white))),
+                        DataColumn(
+                            label: Text('Heart Rate',
+                                style: TextStyle(color: Colors.white))),
+                        DataColumn(
+                            label: Text('Drip Level',
                                 style: TextStyle(color: Colors.white))),
                       ],
                       rows: filteredPatientList.map((item) {
@@ -102,6 +121,38 @@ class _PatientdetailspageState extends State<Patientdetailspage> {
                               GestureDetector(
                                 onTap: () => _onRowTap(item),
                                 child: Text(item['gender'] ?? '',
+                                    style:
+                                        const TextStyle(color: Colors.white)),
+                              ),
+                            ),
+                            DataCell(
+                              GestureDetector(
+                                onTap: () => _onRowTap(item),
+                                child: Text(item['bp'] ?? '',
+                                    style:
+                                        const TextStyle(color: Colors.white)),
+                              ),
+                            ),
+                            DataCell(
+                              GestureDetector(
+                                onTap: () => _onRowTap(item),
+                                child: Text(item['temperature'] ?? '',
+                                    style:
+                                        const TextStyle(color: Colors.white)),
+                              ),
+                            ),
+                            DataCell(
+                              GestureDetector(
+                                onTap: () => _onRowTap(item),
+                                child: Text(item['drip level'] ?? '',
+                                    style:
+                                        const TextStyle(color: Colors.white)),
+                              ),
+                            ),
+                            DataCell(
+                              GestureDetector(
+                                onTap: () => _onRowTap(item),
+                                child: Text(item['heart rate'] ?? '',
                                     style:
                                         const TextStyle(color: Colors.white)),
                               ),
