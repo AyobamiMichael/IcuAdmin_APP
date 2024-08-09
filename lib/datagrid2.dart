@@ -10,6 +10,7 @@ import 'package:icu_admin_app/logpage.dart';
 import 'package:icu_admin_app/newpatientpage.dart';
 import 'package:icu_admin_app/newstaffpage.dart';
 import 'package:icu_admin_app/patientdetails.dart';
+import 'package:icu_admin_app/settings.dart';
 import 'package:intl/intl.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -422,7 +423,7 @@ class ICUDataGrid2State extends State<ICUDataGrid2> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const AssignPage()),
+                            builder: (context) => const SettingsPage()),
                       );
                       // getICUDeviceSelected();
                     },

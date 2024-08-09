@@ -64,7 +64,7 @@ class _HeartGraphState extends State<HeartGraph> {
           'BP': icuData.bp,
           'Temperature': icuData.temperature,
           'Drip Level': icuData.dripLevel.toString(),
-          'Heart Rate': icuData.heartRate
+          'Heart Rate': icuData.heartRate.toString()
         };
       }).toList();
     });
@@ -76,7 +76,7 @@ class _HeartGraphState extends State<HeartGraph> {
     print(filteredICUdataList[0]['Drip Level']);
     // print(filteredICUdataList);
 
-    double? pulse = double.tryParse(filteredICUdataList[0]['Drip Level']);
+    double? pulse = double.tryParse(filteredICUdataList[0]['Heart Rate']);
     if (pulse != null) {
       // Add new data point to the chart
       _chartData.add(SensorData(DateTime.now(), pulse));

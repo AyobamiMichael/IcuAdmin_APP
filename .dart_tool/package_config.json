@@ -74,6 +74,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "file",
+      "rootUri": "file:///C:/Users/Ayobami/AppData/Local/Pub/Cache/hosted/pub.dev/file-7.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///C:/Users/Ayobami/dev/flutter_windows_3.22.2-stable/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -248,6 +254,48 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "shared_preferences",
+      "rootUri": "file:///C:/Users/Ayobami/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences-2.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "shared_preferences_android",
+      "rootUri": "file:///C:/Users/Ayobami/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_android-2.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "shared_preferences_foundation",
+      "rootUri": "file:///C:/Users/Ayobami/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_foundation-2.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "shared_preferences_linux",
+      "rootUri": "file:///C:/Users/Ayobami/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_linux-2.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "shared_preferences_platform_interface",
+      "rootUri": "file:///C:/Users/Ayobami/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_platform_interface-2.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "shared_preferences_web",
+      "rootUri": "file:///C:/Users/Ayobami/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_web-2.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "shared_preferences_windows",
+      "rootUri": "file:///C:/Users/Ayobami/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_windows-2.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///C:/Users/Ayobami/dev/flutter_windows_3.22.2-stable/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -368,7 +416,7 @@
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-08-01T14:08:11.819854Z",
+  "generated": "2024-08-09T11:29:46.036977Z",
   "generator": "pub",
   "generatorVersion": "3.4.3",
   "flutterRoot": "file:///C:/Users/Ayobami/dev/flutter_windows_3.22.2-stable/flutter",

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:icu_admin_app/datagrid.dart';
 import 'package:icu_admin_app/datagrid2.dart';
+import 'package:icu_admin_app/settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IcuAdminApp extends StatelessWidget {
   const IcuAdminApp({super.key});
@@ -26,6 +28,13 @@ class AdminLoginWidget extends StatefulWidget {
 class _AdminLoginWidgetState extends State<AdminLoginWidget> {
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  static String? savedPassword;
+
+  @override
+  void initState() {
+    _loadSavedPassword();
+    super.initState();
+  }
 
   void _login() {
     if (_formKey.currentState!.validate()) {
@@ -33,6 +42,14 @@ class _AdminLoginWidgetState extends State<AdminLoginWidget> {
       // Add your login logic here
       print('Password entered: $password');
     }
+  }
+
+  Future<void> _loadSavedPassword() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      savedPassword =
+          prefs.getString('admin_password') ?? 'admin1'; // Default password
+    });
   }
 
   @override
@@ -76,7 +93,7 @@ class _AdminLoginWidgetState extends State<AdminLoginWidget> {
                         if (value.length < 6) {
                           return 'Password must be at least 6 characters long';
                         }
-                        if (value == '123456') {
+                        if (value == savedPassword) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
