@@ -1,6 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:icu_admin_app/datagrid2.dart';
 import 'package:icu_admin_app/heartgraph.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -9,17 +12,52 @@ class Patientdetailspage extends StatefulWidget {
   const Patientdetailspage({super.key, required this.icuDeviceName});
 
   @override
-  State<Patientdetailspage> createState() => _PatientdetailspageState();
+  State<Patientdetailspage> createState() => PatientdetailspageState();
 }
 
-class _PatientdetailspageState extends State<Patientdetailspage> {
+class PatientdetailspageState extends State<Patientdetailspage> {
   List<Map<String, dynamic>> patientList = [];
   List<Map<String, dynamic>> filteredPatientList = [];
-
+  List<Map<String, dynamic>> icuDevicesData = [];
+  List<Map<String, dynamic>> filteredICUdataList = [];
+  Timer? _timer;
+  static String iCUnameSelected = '';
   @override
   void initState() {
     super.initState();
     _loadPatientData();
+    loadIcuDataList();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void icuDataTimmer() {
+    _timer = Timer.periodic(Duration(seconds: 3), (Timer timer) {});
+  }
+
+  Future<void> loadIcuDataList() async {
+    // Assuming ICUDataGrid2State.icuDataList is already populated
+    setState(() {
+      iCUnameSelected = widget.icuDeviceName;
+      icuDevicesData = ICUDataGrid2State.icuDataList.map((icuData) {
+        return {
+          'name': icuData.icuName,
+          'BP': icuData.bp,
+          'Temperature': icuData.temperature,
+          'Drip Level': icuData.dripLevel.toString(),
+          'Heart Rate': icuData.heartRate
+        };
+      }).toList();
+    });
+    //print(icuDevicesData);
+    filteredICUdataList = icuDevicesData.where((icudata) {
+      return icudata['name'] == widget.icuDeviceName;
+    }).toList();
+    //print(filteredICUdataList);
   }
 
   Future<void> _loadPatientData() async {
@@ -35,10 +73,11 @@ class _PatientdetailspageState extends State<Patientdetailspage> {
           return patient['assignedICUDevice'] == widget.icuDeviceName;
         }).toList();
       });
+      // print(contents);
     }
   }
 
-  void _onRowTap(Map<String, dynamic> item) {
+  void _onRowTap(item) {
     // Handle row tap
     Navigator.push(
       context,
@@ -61,7 +100,7 @@ class _PatientdetailspageState extends State<Patientdetailspage> {
             left: 50,
             child: Center(
               child: Container(
-                width: 800,
+                width: 950,
                 height: 300,
                 margin: const EdgeInsets.all(20.0),
                 padding: const EdgeInsets.all(10.0),
@@ -92,13 +131,27 @@ class _PatientdetailspageState extends State<Patientdetailspage> {
                             label: Text('Temperature',
                                 style: TextStyle(color: Colors.white))),
                         DataColumn(
+                            label: Text('Drip Level',
+                                style: TextStyle(color: Colors.white))),
+                        DataColumn(
                             label: Text('Heart Rate',
                                 style: TextStyle(color: Colors.white))),
                         DataColumn(
-                            label: Text('Drip Level',
+                            label: Text('Ward',
                                 style: TextStyle(color: Colors.white))),
                       ],
                       rows: filteredPatientList.map((item) {
+                        var matchingICUData = filteredICUdataList.firstWhere(
+                            (icuData) =>
+                                icuData['name'] == widget.icuDeviceName,
+                            orElse: () => <String, Object>{
+                                  'BP': 'N/A',
+                                  'Temperature': 'N/A',
+                                  'Drip Level': 'N/A',
+                                  'Heart Rate': 'N/A',
+                                });
+                        print(matchingICUData['Drip Level']);
+
                         return DataRow(
                           cells: [
                             DataCell(
@@ -128,7 +181,7 @@ class _PatientdetailspageState extends State<Patientdetailspage> {
                             DataCell(
                               GestureDetector(
                                 onTap: () => _onRowTap(item),
-                                child: Text(item['bp'] ?? '',
+                                child: Text(matchingICUData['BP'].toString(),
                                     style:
                                         const TextStyle(color: Colors.white)),
                               ),
@@ -136,7 +189,8 @@ class _PatientdetailspageState extends State<Patientdetailspage> {
                             DataCell(
                               GestureDetector(
                                 onTap: () => _onRowTap(item),
-                                child: Text(item['temperature'] ?? '',
+                                child: Text(
+                                    matchingICUData['Temperature'].toString(),
                                     style:
                                         const TextStyle(color: Colors.white)),
                               ),
@@ -144,7 +198,8 @@ class _PatientdetailspageState extends State<Patientdetailspage> {
                             DataCell(
                               GestureDetector(
                                 onTap: () => _onRowTap(item),
-                                child: Text(item['drip level'] ?? '',
+                                child: Text(
+                                    matchingICUData['Drip Level'].toString(),
                                     style:
                                         const TextStyle(color: Colors.white)),
                               ),
@@ -152,7 +207,16 @@ class _PatientdetailspageState extends State<Patientdetailspage> {
                             DataCell(
                               GestureDetector(
                                 onTap: () => _onRowTap(item),
-                                child: Text(item['heart rate'] ?? '',
+                                child: Text(
+                                    matchingICUData['Heart Rate'].toString(),
+                                    style:
+                                        const TextStyle(color: Colors.white)),
+                              ),
+                            ),
+                            DataCell(
+                              GestureDetector(
+                                onTap: () => _onRowTap(item),
+                                child: Text(item['assignedWard'] ?? '',
                                     style:
                                         const TextStyle(color: Colors.white)),
                               ),

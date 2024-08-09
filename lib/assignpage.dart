@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:icu_admin_app/datagrid2.dart';
 import 'package:icu_admin_app/patientdetails.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -15,12 +16,13 @@ class AssignPage extends StatefulWidget {
 
 class AssignPageState extends State<AssignPage> {
   List<Map<String, dynamic>> staffData = [];
-  final List<Map<String, dynamic>> icuDevicesData = List.generate(5, (index) {
+  List<Map<String, dynamic>> icuDevicesData = [];
+  /*final List<Map<String, dynamic>> icuDevicesData = List.generate(5, (index) {
     return {
       'name': 'ICU device ${index + 1}',
       'selected': false,
     };
-  });
+  });*/
 
   bool isAnySelected = false;
   int _selectedDuration = 1;
@@ -30,6 +32,19 @@ class AssignPageState extends State<AssignPage> {
   void initState() {
     super.initState();
     loadStaffData();
+    loadIcuDataList();
+  }
+
+  Future<void> loadIcuDataList() async {
+    // Assuming ICUDataGrid2State.icuDataList is already populated
+    setState(() {
+      icuDevicesData = ICUDataGrid2State.icuDataList.map((icuData) {
+        return {
+          'name': icuData.icuName,
+          'selected': false,
+        };
+      }).toList();
+    });
   }
 
   Future<void> loadStaffData() async {
@@ -67,64 +82,6 @@ class AssignPageState extends State<AssignPage> {
       }
     });
   }
-
-/*  void _onSendButtonPressed() async {
-    List<Map<String, dynamic>> selectedStaff =
-        staffData.where((item) => item['selected']).toList();
-    List<Map<String, dynamic>> selectedICUDevices =
-        icuDevicesData.where((item) => item['selected']).toList();
-
-    // Read the current assignments from the log file
-    final directory = await getApplicationDocumentsDirectory();
-    final path = '${directory.path}/ICU_Admin_Doc/staff_log.json';
-    final file = File(path);
-
-    List<Map<String, dynamic>> existingAssignments = [];
-
-    if (await file.exists()) {
-      final contents = await file.readAsString();
-      existingAssignments = jsonDecode(contents).cast<Map<String, dynamic>>();
-    }
-
-    // Assign selected ICU devices to selected staff members
-    for (var staff in selectedStaff) {
-      for (var device in selectedICUDevices) {
-        // Check if the ICU device is already assigned to this staff member
-        if (!staff['assignedICUDevices'].contains(device['name'])) {
-          staff['assignedICUDevices'].add(device['name']);
-        }
-      }
-    }
-
-    // Merge the new data with the existing data without duplicating staff entries
-    for (var newStaff in selectedStaff) {
-      // Find if the staff member already exists in the existing assignments
-      var existingStaff = existingAssignments.firstWhere(
-          (existing) => existing['name'] == newStaff['name'],
-          orElse: () =>
-              <String, dynamic>{}); // Return an empty map if not found
-
-      if (existingStaff.isNotEmpty) {
-        // Merge ICU device assignments
-        for (var device in newStaff['assignedICUDevices']) {
-          if (!existingStaff['assignedICUDevices'].contains(device)) {
-            existingStaff['assignedICUDevices'].add(device);
-          }
-        }
-       
-      } else {
-        // Add new staff entry to existing assignments
-        existingAssignments.add(newStaff);
-      }
-    }
-
-    // Save the updated data back to the log file
-    await file.writeAsString(jsonEncode(existingAssignments));
-    print('Log file saved at $path');
-
-    showDialogBoxForMessage();
-  }
-   */
 
   void _onSendButtonPressed() async {
     List<Map<String, dynamic>> selectedStaff =

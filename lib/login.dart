@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:icu_admin_app/datagrid.dart';
+import 'package:icu_admin_app/datagrid2.dart';
 
 class IcuAdminApp extends StatelessWidget {
   const IcuAdminApp({super.key});
@@ -79,7 +80,7 @@ class _AdminLoginWidgetState extends State<AdminLoginWidget> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const ICUDataGrid()),
+                                builder: (context) => const ICUDataGrid2()),
                           );
                         }
                         return null;

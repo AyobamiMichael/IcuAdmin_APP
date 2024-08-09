@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:icu_admin_app/datagrid2.dart';
+import 'package:icu_admin_app/patientdetails.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Heartgraph extends StatelessWidget {
@@ -26,11 +28,16 @@ class _HeartGraphState extends State<HeartGraph> {
   final List<SensorData> _chartData = <SensorData>[];
   Timer? _timer;
   String heartBeat2 = '';
+  List<Map<String, dynamic>> icuDevicesData = [];
+  List<Map<String, dynamic>> filteredICUdataList = [];
 
   @override
   void initState() {
     _startTimer();
     super.initState();
+
+    print(PatientdetailspageState.iCUnameSelected);
+    loadIcuDataList();
   }
 
   @override
@@ -41,11 +48,42 @@ class _HeartGraphState extends State<HeartGraph> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       setState(() {
-        getDataFromArduino();
+        loadIcuDataList();
       });
     });
+  }
+
+  Future<void> loadIcuDataList() async {
+    // Assuming ICUDataGrid2State.icuDataList is already populated
+    setState(() {
+      icuDevicesData = ICUDataGrid2State.icuDataList.map((icuData) {
+        return {
+          'name': icuData.icuName,
+          'BP': icuData.bp,
+          'Temperature': icuData.temperature,
+          'Drip Level': icuData.dripLevel.toString(),
+          'Heart Rate': icuData.heartRate
+        };
+      }).toList();
+    });
+    // print(ICUDataGrid2State.icuDataList[1].dripLevel);
+    filteredICUdataList = icuDevicesData.where((icudata) {
+      return icudata['name'] == PatientdetailspageState.iCUnameSelected;
+    }).toList();
+
+    print(filteredICUdataList[0]['Drip Level']);
+    // print(filteredICUdataList);
+
+    double? pulse = double.tryParse(filteredICUdataList[0]['Drip Level']);
+    if (pulse != null) {
+      // Add new data point to the chart
+      _chartData.add(SensorData(DateTime.now(), pulse));
+      if (_chartData.length > 30) {
+        _chartData.removeAt(0);
+      }
+    }
   }
 
   void getDataFromArduino() {
