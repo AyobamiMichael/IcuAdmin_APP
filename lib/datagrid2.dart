@@ -90,6 +90,7 @@ class ICUDataGrid2State extends State<ICUDataGrid2> {
   List<dynamic> staffsJsonData = [];
   List<dynamic> staffData = [];
   List<Map<String, dynamic>> patientData = [];
+  static String wifiGateWay = '';
 
   @override
   void initState() {
@@ -233,12 +234,12 @@ class ICUDataGrid2State extends State<ICUDataGrid2> {
       final wifiName = await info.getWifiName();
       final wifiBSSID = await info.getWifiBSSID();
       final wifiIP = await info.getWifiIP();
-      final wifiGateWay = await info.getWifiGatewayIP();
+      wifiGateWay = (await info.getWifiGatewayIP())!;
 
       // print('WiFi Name: $wifiName');
       // print('WiFi BSSID: $wifiBSSID');
       // print('WiFi IP: $wifiIP');
-      print('WiFi Gateway IP: $wifiGateWay');
+      // print('WiFi Gateway IP: $wifiGateWay');
 
       if (wifiGateWay != null) {
         await fetchData(wifiGateWay);
@@ -278,7 +279,7 @@ class ICUDataGrid2State extends State<ICUDataGrid2> {
                     },
                   ),
                 ),
-                const Text('Assign')
+                const Text('Assign Staff')
               ],
             ),
           ),
@@ -402,7 +403,7 @@ class ICUDataGrid2State extends State<ICUDataGrid2> {
                         },
                       ),
                     ),
-                    const Text('Assign ICU')
+                    const Text('Assign Patient')
                   ],
                 ),
               ],

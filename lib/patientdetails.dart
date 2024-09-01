@@ -79,12 +79,12 @@ class PatientdetailspageState extends State<Patientdetailspage> {
 
   void _onRowTap(item) {
     // Handle row tap
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const Heartgraph(),
-      ),
-    );
+    // Navigator.push(
+    // context,
+    // MaterialPageRoute(
+    // builder: (context) => const Heartgraph(),
+    // ),
+    //);
   }
 
   @override

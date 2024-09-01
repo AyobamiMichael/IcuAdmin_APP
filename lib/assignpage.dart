@@ -33,6 +33,7 @@ class AssignPageState extends State<AssignPage> {
     super.initState();
     loadStaffData();
     loadIcuDataList();
+    sendICUDataToArduino(ICUDataGrid2State.wifiGateWay);
   }
 
   Future<void> loadIcuDataList() async {
@@ -81,6 +82,10 @@ class AssignPageState extends State<AssignPage> {
         icuDevicesData[index]['selected'] = value ?? false;
       }
     });
+  }
+
+  Future<void> sendICUDataToArduino(String ip) async {
+    print('{WIFI$ip}');
   }
 
   void _onSendButtonPressed() async {
@@ -246,7 +251,7 @@ class AssignPageState extends State<AssignPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Assign Staff'),
+        title: const Text('Assign Staff To ICU'),
       ),
       body: Row(
         children: [

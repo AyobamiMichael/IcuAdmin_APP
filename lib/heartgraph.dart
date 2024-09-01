@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:icu_admin_app/datagrid2.dart';
 import 'package:icu_admin_app/patientdetails.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-
+//import 'package:syncfusion_flutter_charts/charts.dart';
+/*
 class Heartgraph extends StatelessWidget {
   const Heartgraph({super.key});
 
@@ -141,3 +141,4 @@ class SensorData {
 
   SensorData(this.time, this.pulse);
 }
+*/
